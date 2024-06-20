@@ -25,23 +25,30 @@ class FollowRequest < ApplicationRecord
 
   # FollowRequest#recipient: returns a row from the users table associated to this follow request by the recipient_id column
 
-  def sender
-    my_sender_id = self.sender_id
+  # def sender
+  #   my_sender_id = self.sender_id
 
-    matching_users = User.where({ :id => my_sender_id })
+  #   matching_users = User.where({ :id => my_sender_id })
 
-    the_user = matching_users.at(0)
+  #   the_user = matching_users.at(0)
 
-    return the_user
-  end
+  #   return the_user
+  # end
 
-  def recipient
-    my_recipient_id = self.recipient_id
+  #many-to-one
+  belongs_to(:sender, foreign_key:"my_sender_id")
 
-    matching_users = User.where({ :id => my_recipient_id })
+  # def recipient
+  #   my_recipient_id = self.recipient_id
 
-    the_user = matching_users.at(0)
+  #   matching_users = User.where({ :id => my_recipient_id })
 
-    return the_user
-  end
+  #   the_user = matching_users.at(0)
+
+  #   return the_user
+  # end
+
+  #many-to-one
+  belongs_to(:recipient, foreign_key:"my_recipient_id")
+
 end

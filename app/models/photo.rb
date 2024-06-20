@@ -29,31 +29,41 @@ class Photo < ApplicationRecord
 
   # Photo#fans: returns rows from the users table associated to this photo through its likes
 
-  def poster
-    my_owner_id = self.owner_id
+  # def poster
+  #   my_owner_id = self.owner_id
 
-    matching_users = User.where({ :id => my_owner_id })
+  #   matching_users = User.where({ :id => my_owner_id })
 
-    the_user = matching_users.at(0)
+  #   the_user = matching_users.at(0)
 
-    return the_user
-  end
+  #   return the_user
+  # end
 
-  def comments
-    my_id = self.id
+  #many_to-one
+  belongs_to(:poster, class_name:"User", foreign_key:"owner_id")
+  
 
-    matching_comments = Comment.where({ :photo_id => self.id })
+  # def comments
+  #   my_id = self.id
 
-    return matching_comments
-  end
+  #   matching_comments = Comment.where({ :photo_id => self.id })
 
-  def likes
-    my_id = self.id
+  #   return matching_comments
+  # end
 
-    matching_likes = Like.where({ :photo_id => self.id })
+  #one-to-many relationships  
+  has_many(:comments, foreign_key:"photo_id")
 
-    return matching_likes
-  end
+  # def likes
+  #   my_id = self.id
+
+  #   matching_likes = Like.where({ :photo_id => self.id })
+
+  #   return matching_likes
+  # end
+
+  #one-to-many relationships  
+  has_many(:likes, class_name:"Like", foreign_key:"photo_id")
 
   def fans
     my_likes = self.likes

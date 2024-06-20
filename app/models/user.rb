@@ -56,29 +56,39 @@ class User < ApplicationRecord
 
   # User#discover: returns rows from the photos table associated to this user through its leaders (the leaders' liked_photos)
 
-  def comments
-    my_id = self.id
+  # def comments
+  #   my_id = self.id
 
-    matching_comments = Comment.where({ :author_id => my_id })
+  #   matching_comments = Comment.where({ :author_id => my_id })
 
-    return matching_comments
-  end
+  #   return matching_comments
+  # end
 
-  def own_photos
-    my_id = self.id
+  #one-to-many relationships  
+  has_many(:comments, foreign_key:"author_id")
 
-    matching_photos = Photo.where({ :owner_id => my_id })
+  # def own_photos
+  #   my_id = self.id
 
-    return matching_photos
-  end
+  #   matching_photos = Photo.where({ :owner_id => my_id })
 
-  def likes
-    my_id = self.id
+  #   return matching_photos
+  # end
 
-    matching_likes = Like.where({ :fan_id => my_id })
+  #one-to-many relationships  
+  has_many(:own_photos, class_name:"Photo", foreign_key:"owner_id")
 
-    return matching_likes
-  end
+
+  # def likes
+  #   my_id = self.id
+
+  #   matching_likes = Like.where({ :fan_id => my_id })
+
+  #   return matching_likes
+  # end
+
+  #one-to-many relationships  
+  has_many(:likes, foreign_key:"fan_id")
 
   def liked_photos
     my_likes = self.likes
@@ -110,21 +120,27 @@ class User < ApplicationRecord
     return unique_matching_photos
   end
 
-  def sent_follow_requests
-    my_id = self.id
+  # def sent_follow_requests
+  #   my_id = self.id
 
-    matching_follow_requests = FollowRequest.where({ :sender_id => my_id })
+  #   matching_follow_requests = FollowRequest.where({ :sender_id => my_id })
 
-    return matching_follow_requests
-  end
+  #   return matching_follow_requests
+  # end
 
-  def received_follow_requests
-    my_id = self.id
+  #one-to-many relationships  
+  has_many(:sent_follow_requests, class_name:"FollowRequest", foreign_key:"sender_id")
 
-    matching_follow_requests = FollowRequest.where({ :recipient_id => my_id })
+  # def received_follow_requests
+  #   my_id = self.id
 
-    return matching_follow_requests
-  end
+  #   matching_follow_requests = FollowRequest.where({ :recipient_id => my_id })
+
+  #   return matching_follow_requests
+  # end
+
+  #one-to-many relationships  
+  has_many(:received_follow_requests, class_name:"FollowRequest", foreign_key:"recipient_id")
 
   def accepted_sent_follow_requests
     my_sent_follow_requests = self.sent_follow_requests
