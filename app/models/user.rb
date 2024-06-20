@@ -149,13 +149,19 @@ class User < ApplicationRecord
   #one-to-many relationships  
   has_many(:received_follow_requests, class_name:"FollowRequest", foreign_key:"recipient_id")
 
-  def accepted_sent_follow_requests
-    my_sent_follow_requests = self.sent_follow_requests
+  # def accepted_sent_follow_requests
+  #   my_sent_follow_requests = self.sent_follow_requests
 
-    matching_follow_requests = my_sent_follow_requests.where({ :status => "accepted" })
+  #   matching_follow_requests = my_sent_follow_requests.where({ :status => "accepted" })
 
-    return matching_follow_requests
-  end
+  #   return matching_follow_requests
+  # end
+
+  has_many(:accepted_sent_follow_requests,  -> { where(status: accepted) }, class_name: 'FollowRequest')  
+
+  #has_many ::accepted_sent_follow_requests, though: :follow_requests
+
+  #scope :status, -> { where(status: accepted) }
 
   def accepted_received_follow_requests
     my_received_follow_requests = self.received_follow_requests
@@ -164,6 +170,8 @@ class User < ApplicationRecord
 
     return matching_follow_requests
   end
+
+  #has_many(:accepted_received_follow_requests,  -> { where(status: "accepted") }, class_name: 'FollowRequest')  
 
   def followers
     my_accepted_received_follow_requests = self.accepted_received_follow_requests

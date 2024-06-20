@@ -6,6 +6,8 @@ Lesson: https://learn.firstdraft.com/lessons/157-photogram-associations
 
 Grading: https://grades.firstdraft.com/resources/efa93d83-1750-48e4-9f09-a7c32e9a2c0f
 
+ActiveRecord scoped associations: https://remimercier.com/scoped-active-record-associations/ - Discuss more advanced encapsulation.
+
 <hr>
 
 Notes
@@ -53,10 +55,7 @@ class Actor < ApplicationRecord
 end
 ```
 
-Here is the explanation:
-- One actor has many characters.
-- Associate each character with the corresponding movie. 
-- The above command allows you to locate the movie the actor has acted.
+- In the above code, each actor is associated with the corresponding movie through each character. 
 
 *** 
 
@@ -149,3 +148,5 @@ Another similar example
   #many-to-many
   has_many(:liked_photos, through: :likes, source: :photo)
 ```
+
+***
