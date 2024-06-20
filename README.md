@@ -107,3 +107,45 @@ Here is the explanation:
   #many_to-one
   belongs_to(:poster, class_name:"User", foreign_key:"owner_id")
 ```
+
+10. An example of using though and source.
+
+```
+  # def fans
+  #   my_likes = self.likes
+    
+  #   array_of_user_ids = Array.new
+
+  #   my_likes.each do |a_like|
+  #     array_of_user_ids.push(a_like.fan_id)
+  #   end
+
+  #   matching_users = User.where({ :id => array_of_user_ids })
+
+  #   return matching_users
+  # end
+
+  #many-to-many
+  has_many(:fans, through: :likes, source: :fan)
+```
+
+Another similar example
+
+```
+  # def liked_photos
+  #   my_likes = self.likes
+    
+  #   array_of_photo_ids = Array.new
+
+  #   my_likes.each do |a_like|
+  #     array_of_photo_ids.push(a_like.photo_id)
+  #   end
+
+  #   matching_photos = Photo.where({ :id => array_of_photo_ids })
+
+  #   return matching_photos
+  # end
+
+  #many-to-many
+  has_many(:liked_photos, through: :likes, source: :photo)
+```

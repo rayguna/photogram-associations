@@ -65,19 +65,22 @@ class Photo < ApplicationRecord
   #one-to-many relationships  
   has_many(:likes, class_name:"Like", foreign_key:"photo_id")
 
-  def fans
-    my_likes = self.likes
+  # def fans
+  #   my_likes = self.likes
     
-    array_of_user_ids = Array.new
+  #   array_of_user_ids = Array.new
 
-    my_likes.each do |a_like|
-      array_of_user_ids.push(a_like.fan_id)
-    end
+  #   my_likes.each do |a_like|
+  #     array_of_user_ids.push(a_like.fan_id)
+  #   end
 
-    matching_users = User.where({ :id => array_of_user_ids })
+  #   matching_users = User.where({ :id => array_of_user_ids })
 
-    return matching_users
-  end
+  #   return matching_users
+  # end
+
+  #many-to-many
+  has_many(:fans, through: :likes, source: :fan)
 
   def fan_list
     my_fans = self.fans

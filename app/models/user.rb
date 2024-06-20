@@ -90,35 +90,42 @@ class User < ApplicationRecord
   #one-to-many relationships  
   has_many(:likes, foreign_key:"fan_id")
 
-  def liked_photos
-    my_likes = self.likes
+  # def liked_photos
+  #   my_likes = self.likes
     
-    array_of_photo_ids = Array.new
+  #   array_of_photo_ids = Array.new
 
-    my_likes.each do |a_like|
-      array_of_photo_ids.push(a_like.photo_id)
-    end
+  #   my_likes.each do |a_like|
+  #     array_of_photo_ids.push(a_like.photo_id)
+  #   end
 
-    matching_photos = Photo.where({ :id => array_of_photo_ids })
+  #   matching_photos = Photo.where({ :id => array_of_photo_ids })
 
-    return matching_photos
-  end
+  #   return matching_photos
+  # end
 
-  def commented_photos
-    my_comments = self.comments
+  #many-to-many
+  has_many(:liked_photos, through: :likes, source: :photo)
+
+  # def commented_photos
+  #   my_comments = self.comments
     
-    array_of_photo_ids = Array.new
+  #   array_of_photo_ids = Array.new
 
-    my_comments.each do |a_comment|
-      array_of_photo_ids.push(a_comment.photo_id)
-    end
+  #   my_comments.each do |a_comment|
+  #     array_of_photo_ids.push(a_comment.photo_id)
+  #   end
 
-    matching_photos = Photo.where({ :id => array_of_photo_ids })
+  #   matching_photos = Photo.where({ :id => array_of_photo_ids })
 
-    unique_matching_photos = matching_photos.distinct
+  #   unique_matching_photos = matching_photos.distinct
 
-    return unique_matching_photos
-  end
+  #   return unique_matching_photos
+  # end
+
+  #many-to-many
+  has_many(:commented_photos, through: :comments, source: :photo)
+
 
   # def sent_follow_requests
   #   my_id = self.id
