@@ -149,4 +149,68 @@ Another similar example
   has_many(:liked_photos, through: :likes, source: :photo)
 ```
 
+Scope association:
+
+11. Adding conditional statement
+- The same syntax as has_many(): has many(:method_name, class_name: "ClassName", foreign_key:"foreignkey_id"), except that you add -> {where status:true}, class_name:"ClassName", foreign_key:"foreignkey_id").
+- Here is an example.
+
+```
+  # def accepted_received_follow_requests
+  #   my_received_follow_requests = self.received_follow_requests
+
+  #   matching_follow_requests = my_received_follow_requests.where({ :status => "accepted" })
+
+  #   return matching_follow_requests
+  # end
+
+  has_many(:accepted_received_follow_requests,  -> { where status: "accepted" }, class_name:"FollowRequest", foreign_key:"recipient_id")  
+```
+
+12. many-to-many association through a join table.
+
+```
+  # def discover
+  #   array_of_photo_ids = Array.new
+
+  #   my_leaders = self.leaders
+    
+  #   my_leaders.each do |a_user|
+  #     leader_liked_photos = a_user.liked_photos
+
+  #     leader_liked_photos.each do |a_photo|
+  #       array_of_photo_ids.push(a_photo.id)
+  #     end
+  #   end
+
+  #   matching_photos = Photo.where({ :id => array_of_photo_ids })
+
+  #   return matching_photos
+  # end
+
+  has_many(:discover, through: :leaders, source: :liked_photos)
+```
+
+Here is another less-straightforward example. The .sender_id method implies that the user table is joined to the sender table. 
+
+
+```
+  # def followers
+  #   my_accepted_received_follow_requests = self.accepted_received_follow_requests
+    
+  #   array_of_user_ids = Array.new
+
+  #   my_accepted_received_follow_requests.each do |a_follow_request|
+  #     array_of_user_ids.push(a_follow_request.sender_id)
+  #   end
+
+  #   matching_users = User.where({ :id => array_of_user_ids })
+
+  #   return matching_users
+  # end
+
+  has_many(:followers, through: :accepted_received_follow_requests, source: :sender)
+```
+
+
 ***
