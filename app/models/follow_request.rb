@@ -36,7 +36,7 @@ class FollowRequest < ApplicationRecord
   # end
 
   #many-to-one
-  belongs_to(:sender, foreign_key:"my_sender_id")
+  belongs_to(:sender, class_name:"User", foreign_key:"sender_id")
 
   # def recipient
   #   my_recipient_id = self.recipient_id
@@ -49,6 +49,6 @@ class FollowRequest < ApplicationRecord
   # end
 
   #many-to-one
-  belongs_to(:recipient, foreign_key:"my_recipient_id")
+  belongs_to(:recipient, class_name:"User", foreign_key:"recipient_id")
 
 end

@@ -35,7 +35,7 @@ class Like < ApplicationRecord
   # end
 
   #many-to-one
-  belongs_to(:fan, foreign_key:"fan_id")
+  belongs_to(:fan, class_name:"User", foreign_key:"fan_id")
 
   # def photo
   #   my_photo_id = self.photo_id
@@ -48,6 +48,6 @@ class Like < ApplicationRecord
   # end
 
   #many-to-one
-  belongs_to(:photo, foreign_key:"my_photo_id")
+  belongs_to(:photo, foreign_key:"photo_id")
 
 end
