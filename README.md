@@ -67,3 +67,43 @@ Here is the explanation:
 5. Refer to the figure provided in the lesson to understand the table relationships.
 
 6. Go to app/models/*.rb files and create the shorthand commands to complete this assignment.
+
+7. **Beware of aliases!** In the assignment, the foreign keys have been renamed, which makes it tricky. USe the original foreign key id in the one-liner commands to get it right.
+
+8. Here is an example of has_many() one-liner, Note the syntax.
+
+- One photo has many likes
+```
+#class Photo
+
+  # def likes
+  #   my_id = self.id
+
+  #   matching_likes = Like.where({ :photo_id => self.id })
+
+  #   return matching_likes
+  # end
+
+  #one-to-many relationships  
+  has_many(:likes, class_name:"Like", foreign_key:"photo_id")
+```
+
+9. Here is an example of belongs_to() one-liner, Note the syntax.
+
+- One photo has many posters
+```
+#class Photo
+
+  # def poster
+  #   my_owner_id = self.owner_id
+
+  #   matching_users = User.where({ :id => my_owner_id })
+
+  #   the_user = matching_users.at(0)
+
+  #   return the_user
+  # end
+
+  #many_to-one
+  belongs_to(:poster, class_name:"User", foreign_key:"owner_id")
+```
